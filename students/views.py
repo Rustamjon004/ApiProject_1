@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from rest_framework import viewsets, mixins, generics
-from students.models import Student, Course
+from rest_framework import viewsets, mixins
+from students.models import Course
 
 
 from django.contrib.auth.models import User
