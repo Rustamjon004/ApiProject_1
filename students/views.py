@@ -44,7 +44,7 @@ class LoginView(APIView):
             })
         return Response({"error": "Invalid credentials"}, status=400)
 
-# Talabalar ro‘yxati va tafsilotlari
+
 class StudentListView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
@@ -55,13 +55,13 @@ class StudentDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = StudentSerializer
 
     def get_permissions(self):
-        if self.request.user.is_staff:  # Admin barcha talabalarga kirishi mumkin
+        if self.request.user.is_staff:
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            return Student.objects.all()  # Admin barcha talabalarga kirishi mumkin
+            return Student.objects.all()
         return Student.objects.filter(user=self.request.user)  #
 
 # Courses View
@@ -76,14 +76,14 @@ class CourseViewSet(mixins.ListModelMixin,
 
     def get(self, request, *args, **kwargs):
         if 'pk' in kwargs:
-            return self.retrieve(request, *args, **kwargs)  # GET /courses/<id>/
-        return self.list(request, *args, **kwargs)         # GET /courses/
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)         
 
     def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)       # POST /courses/
+        return self.create(request, *args, **kwargs)
 
     def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)       # PUT /courses/<id>/
+        return self.update(request, *args, **kwargs)
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
